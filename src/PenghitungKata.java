@@ -6,7 +6,11 @@
 /**
  *
  * @author MyLaptop
- */
+ */import java.io.*;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
 public class PenghitungKata extends javax.swing.JFrame {
 
     /**
@@ -14,6 +18,49 @@ public class PenghitungKata extends javax.swing.JFrame {
      */
     public PenghitungKata() {
         initComponents();
+ // Tombol Hitung
+    btnHitung.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            hitungTeks();
+        }
+    });
+
+    // Tombol Cari Kata
+    btnCari.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            cariKata();
+        }
+    });
+
+    // Tombol Simpan ke File
+    btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            simpanFile();
+        }
+    });
+
+    // Tombol Clear
+    btnClear.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            txtInput.setText("");
+            hitungTeks();
+        }
+    });
+
+    // Hitung otomatis saat mengetik
+    txtInput.getDocument().addDocumentListener(new DocumentListener() {
+        public void insertUpdate(DocumentEvent e) {
+            hitungTeks();
+        }
+
+        public void removeUpdate(DocumentEvent e) {
+            hitungTeks();
+        }
+
+        public void changedUpdate(DocumentEvent e) {
+            hitungTeks();
+        }
+    });
     }
 
     /**
@@ -27,47 +74,241 @@ public class PenghitungKata extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        scrollPane = new javax.swing.JScrollPane();
+        txtInput = new javax.swing.JTextArea();
+        btnHitung = new javax.swing.JButton();
+        btnCari = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+        lblKata = new javax.swing.JLabel();
+        lblKarakter = new javax.swing.JLabel();
+        lblKalimat = new javax.swing.JLabel();
+        lblParagraf = new javax.swing.JLabel();
+        lblVokal = new javax.swing.JLabel();
+        lblKonsonan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 204, 255));
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setText("Aplikasi Penghitung Kata");
+
+        txtInput.setColumns(20);
+        txtInput.setRows(5);
+        scrollPane.setViewportView(txtInput);
+
+        btnHitung.setText("Hitung");
+        btnHitung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHitungActionPerformed(evt);
+            }
+        });
+
+        btnCari.setText("Cari Kata");
+
+        btnSimpan.setText("Simpan");
+
+        btnClear.setText("Clear");
+
+        lblKata.setText("Hasil jumlah kata :");
+
+        lblKarakter.setText("Hasil jumlah karakter :");
+
+        lblKalimat.setText("Hasil jumlah kalimat :");
+
+        lblParagraf.setText("Hasil jumlah paragraf :");
+
+        lblVokal.setText("Hasil jumlah huruf vokal :");
+
+        lblKonsonan.setText("Hasil jumlah huruf konsonan :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jLabel1)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnHitung)
+                                .addGap(46, 46, 46)
+                                .addComponent(btnCari)
+                                .addGap(54, 54, 54)
+                                .addComponent(btnSimpan)
+                                .addGap(47, 47, 47)
+                                .addComponent(btnClear)
+                                .addGap(49, 49, 49))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblKalimat)
+                                    .addComponent(lblVokal)
+                                    .addComponent(lblKata))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblKarakter)
+                                    .addComponent(lblKonsonan)
+                                    .addComponent(lblParagraf))
+                                .addGap(57, 57, 57)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnHitung)
+                    .addComponent(btnCari)
+                    .addComponent(btnSimpan)
+                    .addComponent(btnClear))
+                .addGap(51, 51, 51)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblKarakter)
+                    .addComponent(lblKata))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblKalimat)
+                    .addComponent(lblParagraf))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblVokal)
+                    .addComponent(lblKonsonan))
+                .addGap(78, 78, 78))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(180, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void hitungTeks() {
+    String teks = txtInput.getText().trim();
+
+    if (teks.isEmpty()) {
+        lblKata.setText("Hasil jumlah kata : 0");
+        lblKarakter.setText("Hasil jumlah karakter : 0");
+        lblKalimat.setText("Hasil jumlah kalimat : 0");
+        lblParagraf.setText("Hasil jumlah paragraf : 0");
+
+        if (lblVokal != null && lblKonsonan != null) {
+            lblVokal.setText("Hasil jumlah huruf vokal : 0");
+            lblKonsonan.setText("Hasil jumlah huruf konsonan : 0");
+        }
+        return;
+    }
+
+    int jumlahKarakter = teks.length();
+    int jumlahKata = teks.split("\\s+").length;
+    int jumlahKalimat = teks.split("[.!?]+").length;
+    int jumlahParagraf = teks.split("\\n+").length;
+
+    // 🔹 Hitung huruf vokal dan konsonan
+    int vokal = 0, konsonan = 0;
+    for (char c : teks.toLowerCase().toCharArray()) {
+        if (Character.isLetter(c)) {
+            if ("aiueo".indexOf(c) >= 0) vokal++;
+            else konsonan++;
+        }
+    }
+
+    lblKata.setText("Hasil jumlah kata : " + jumlahKata);
+    lblKarakter.setText("Hasil jumlah karakter : " + jumlahKarakter);
+    lblKalimat.setText("Hasil jumlah kalimat : " + jumlahKalimat);
+    lblParagraf.setText("Hasil jumlah paragraf : " + jumlahParagraf);
+
+    if (lblVokal != null && lblKonsonan != null) {
+        lblVokal.setText("Hasil jumlah huruf vokal : " + vokal);
+        lblKonsonan.setText("Hasil jumlah huruf konsonan : " + konsonan);
+    }
+}
+
+
+private void cariKata() {
+    String teks = txtInput.getText();
+    if (teks.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Teks masih kosong!");
+        return;
+    }
+
+    String kata = JOptionPane.showInputDialog(this, "Masukkan kata yang ingin dicari:");
+    if (kata != null && !kata.trim().isEmpty()) {
+        int count = teks.split("(?i)\\b" + kata + "\\b").length - 1;
+        JOptionPane.showMessageDialog(this,
+                "Kata \"" + kata + "\" ditemukan sebanyak " + count + " kali.");
+
+        // 🔹 Bonus: Highlight kata yang dicari
+        try {
+            javax.swing.text.Highlighter highlighter = txtInput.getHighlighter();
+            highlighter.removeAllHighlights();
+
+            String lowerText = teks.toLowerCase();
+            String lowerWord = kata.toLowerCase();
+            int index = lowerText.indexOf(lowerWord);
+
+            while (index >= 0) {
+                int end = index + lowerWord.length();
+                highlighter.addHighlight(index, end,
+                        new javax.swing.text.DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW));
+                index = lowerText.indexOf(lowerWord, end);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+private void simpanFile() {
+    JFileChooser fileChooser = new JFileChooser();
+    int pilihan = fileChooser.showSaveDialog(this);
+
+    if (pilihan == JFileChooser.APPROVE_OPTION) {
+        File file = fileChooser.getSelectedFile();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write("=== HASIL PENGHITUNG KATA ===\n");
+            writer.write("Teks:\n" + txtInput.getText() + "\n\n");
+            writer.write(lblKata.getText() + "\n");
+            writer.write(lblKarakter.getText() + "\n");
+            writer.write(lblKalimat.getText() + "\n");
+            writer.write(lblParagraf.getText() + "\n");
+
+            JOptionPane.showMessageDialog(this, "Berhasil disimpan!");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan file: " + ex.getMessage());
+        }
+    }
+}
+
+
+
+    private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHitungActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,7 +346,19 @@ public class PenghitungKata extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCari;
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnHitung;
+    private javax.swing.JButton btnSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblKalimat;
+    private javax.swing.JLabel lblKarakter;
+    private javax.swing.JLabel lblKata;
+    private javax.swing.JLabel lblKonsonan;
+    private javax.swing.JLabel lblParagraf;
+    private javax.swing.JLabel lblVokal;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTextArea txtInput;
     // End of variables declaration//GEN-END:variables
 }
